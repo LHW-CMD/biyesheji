@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>食味鲜 - 校园订餐系统</title>
+    <!-- 确保CSS文件路径正确（与index.html同目录） -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- 登录/注册模块 -->
+    <div class="login-register-container" id="loginRegisterContainer">
+        <div class="login-register-box">
+            <h1 class="system-name">食味鲜</h1>
+            <div class="tab-switch">
+                <div class="tab-btn active" id="loginTab">登录</div>
+                <div class="tab-btn" id="registerTab">注册</div>
+            </div>
+
+            <!-- 登录表单 -->
+            <div class="login-form" id="loginForm">
+                <div class="form-item">
+                    <label for="loginAccount">账号</label>
+                    <input type="text" id="loginAccount" placeholder="请输入您的账号">
+                </div>
+                <div class="form-item">
+                    <label for="loginPwd">密码</label>
+                    <input type="password" id="loginPwd" placeholder="请输入您的密码">
+                </div>
+                <div class="role-select">
+                    <label><input type="radio" name="loginRole" value="consumer" checked> 消费者</label>
+                    <label><input type="radio" name="loginRole" value="admin"> 管理员</label>
+                </div>
+                <button class="submit-btn" id="loginBtn">登录</button>
+            </div>
+
+            <!-- 注册表单 -->
+            <div class="register-form" id="registerForm" style="display: none;">
+                <div class="form-item">
+                    <label for="regAccount">设置账号</label>
+                    <input type="text" id="regAccount" placeholder="请设置您的账号">
+                </div>
+                <div class="form-item">
+                    <label for="regPwd">设置密码</label>
+                    <input type="password" id="regPwd" placeholder="请设置您的密码">
+                </div>
+                <div class="form-item">
+                    <label for="regPwdConfirm">确认密码</label>
+                    <input type="password" id="regPwdConfirm" placeholder="请再次输入密码">
+                </div>
+                <div class="role-select">
+                    <label><input type="radio" name="regRole" value="consumer" checked> 消费者</label>
+                    <label><input type="radio" name="regRole" value="admin"> 管理员</label>
+                </div>
+                <button class="submit-btn" id="registerBtn">注册</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 主系统页面 -->
+    <div class="main-system" id="mainSystem">
+        <!-- 导航栏（移动端适配：横向滚动，避免挤压） -->
+        <div class="nav-bar">
+            <ul class="nav-list">
+                <li class="nav-item"><a href="javascript:;" class="nav-link active" data-page="home">首页</a></li>
+                <li class="nav-item"><a href="javascript:;" class="nav-link" data-page="dish">菜品</a></li>
+                <li class="nav-item"><a href="javascript:;" class="nav-link" data-page="store">门店</a></li>
+                <li class="nav-item"><a href="javascript:;" class="nav-link" data-page="cart">购物车</a></li>
+                <li class="nav-item"><a href="javascript:;" class="nav-link" data-page="order">我的订单</a></li>
+                <li class="nav-item"><a href="javascript:;" class="nav-link" data-page="userCenter">个人中心</a></li>
+            </ul>
+        </div>
+
+        <!-- 内容区域（移动端适配：宽度100%，自适应内边距） -->
+        <div class="content-wrap">
+            <h2 class="welcome-text">欢迎使用食味鲜--校园订餐系统</h2>
+
+            <!-- 首页 -->
+            <div class="page home-page" id="homePage">
+                <div class="delivery-type">
+                    <div class="delivery-card active" id="takeawayCard">
+                        <div class="delivery-icon">🚲</div>
+                        <div class="delivery-name">外卖配送</div>
+                        <div class="delivery-desc">配送费：1.5元/件 | 配送到校园指定地点</div>
+                    </div>
+                    <div class="delivery-card" id="selfPickCard">
+                        <div class="delivery-icon">🏪</div>
+                        <div class="delivery-name">门店自提</div>
+                        <div class="delivery-desc">打包费：0.5元/件 | 到店自取，省时便捷</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 菜品页面 -->
+            <div class="page dish-page" id="dishPage">
+                <div class="dish-filter">
+                    <label class="filter-label">筛选门店：</label>
+                    <select class="store-filter-select" id="storeFilterSelect">
+                        <option value="all">全部门店</option>
+                        <option value="shaxian">沙县小吃</option>
+                        <option value="luosifen">螺蛳粉</option>
+                        <option value="homecook">家常大众菜</option>
+                        <option value="eggRice">滑蛋饭</option>
+                        <option value="burgerKing">汉堡王</option>
+                        <option value="baozai">煲仔饭</option>
+                        <option value="fruit">水果摊</option>
+                    </select>
+                </div>
+                <div class="dish-list" id="dishList">
+                    <!-- 菜品由JS动态生成 -->
+                </div>
+            </div>
+
+            <!-- 门店页面 -->
+            <div class="page store-page" id="storePage">
+                <div class="store-list" id="storeList">
+                    <!-- 门店静态渲染 -->
+                    <div class="store-card" data-store="shaxian">
+                        <div class="store-img">🍜</div>
+                        <div class="store-info">
+                            <div class="store-name">沙县小吃</div>
+                            <div class="store-desc">经典闽味，营养实惠，老少皆宜</div>
+                        </div>
+                    </div>
+                    <div class="store-card" data-store="luosifen">
+                        <div class="store-img">🍲</div>
+                        <div class="store-info">
+                            <div class="store-name">螺蛳粉</div>
+                            <div class="store-desc">鲜香麻辣，酸笋入味，回味无穷</div>
+                        </div>
+                    </div>
+                    <div class="store-card" data-store="homecook">
+                        <div class="store-img">🍳</div>
+                        <div class="store-info">
+                            <div class="store-name">家常大众菜</div>
+                            <div class="store-desc">地道家常味，价格亲民，分量十足</div>
+                        </div>
+                    </div>
+                    <div class="store-card" data-store="eggRice">
+                        <div class="store-img">🍚</div>
+                        <div class="store-info">
+                            <div class="store-name">滑蛋饭</div>
+                            <div class="store-desc">滑蛋嫩滑，食材新鲜，饱腹感强</div>
+                        </div>
+                    </div>
+                    <div class="store-card" data-store="burgerKing">
+                        <div class="store-img">🍔</div>
+                        <div class="store-info">
+                            <div class="store-name">汉堡王</div>
+                            <div class="store-desc">西式快餐，现烤面包，肉质鲜嫩</div>
+                        </div>
+                    </div>
+                    <div class="store-card" data-store="baozai">
+                        <div class="store-img">🍱</div>
+                        <div class="store-info">
+                            <div class="store-name">煲仔饭</div>
+                            <div class="store-desc">锅巴香脆，食材丰富，风味独特</div>
+                        </div>
+                    </div>
+                    <div class="store-card" data-store="fruit">
+                        <div class="store-img">🍉</div>
+                        <div class="store-info">
+                            <div class="store-name">水果摊</div>
+                            <div class="store-desc">新鲜水果，种类繁多，补充维C</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 购物车页面 -->
+            <div class="page cart-page" id="cartPage">
+                <div class="cart-table-wrap">
+                    <table class="cart-table">
+                        <thead>
+                            <tr>
+                                <th>商品图片</th>
+                                <th>商品名称</th>
+                                <th>所属门店</th>
+                                <th>单价</th>
+                                <th>数量</th>
+                                <th>打包/配送费</th>
+                                <th>小计</th>
+                                <th>操作</th>
+                            </tr>
+                        </thead>
+                        <tbody id="cartTableBody">
+                            <!-- 购物车商品由JS动态生成 -->
+                        </tbody>
+                    </table>
+                </div>
+                <div class="cart-summary">
+                    <div class="summary-item">商品总价：<span class="summary-price" id="goodsTotal">¥0.00</span></div>
+                    <div class="summary-item">总额外费用：<span class="summary-price" id="totalExtraFee">¥0.00</span></div>
+                    <div class="summary-item">订单总价：<span class="summary-price" id="orderTotal">¥0.00</span></div>
+                </div>
+                <button class="submit-btn settle-order-btn" id="settleBtn">结算订单</button>
+            </div>
+
+            <!-- 我的订单页面 -->
+            <div class="page order-page" id="orderPage">
+                <div class="order-table-wrap">
+                    <table class="order-table">
+                        <thead>
+                            <tr>
+                                <th>订单编号</th>
+                                <th>商品信息</th>
+                                <th>订单金额</th>
+                                <th>配送方式</th>
+                                <th>订单状态</th>
+                                <th>创建时间</th>
+                            </tr>
+                        </thead>
+                        <tbody id="orderTableBody">
+                            <!-- 订单信息由JS动态生成 -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- 个人中心页面 -->
+            <div class="page user-center-page" id="userCenterPage">
+                <div class="user-info-wrap">
+                    <h3 class="user-center-title">个人信息</h3>
+                    <div class="user-info-item">
+                        <label class="info-label">账号：</label>
+                        <span class="info-value" id="userAccount">--</span>
+                    </div>
+                    <div class="user-info-item">
+                        <label class="info-label">角色：</label>
+                        <span class="info-value" id="userRole">--</span>
+                    </div>
+                    <div class="user-info-item">
+                        <label class="info-label">收货地址：</label>
+                        <span class="info-value" id="userAddress">未设置</span>
+                        <button class="edit-btn" id="editAddressBtn">编辑</button>
+                    </div>
+                </div>
+
+                <div class="change-pwd-wrap">
+                    <h3 class="user-center-title">修改密码</h3>
+                    <div class="form-item">
+                        <label for="oldPwd">原密码</label>
+                        <input type="password" id="oldPwd" placeholder="请输入原密码">
+                    </div>
+                    <div class="form-item">
+                        <label for="newPwd">新密码</label>
+                        <input type="password" id="newPwd" placeholder="请输入新密码">
+                    </div>
+                    <div class="form-item">
+                        <label for="confirmNewPwd">确认新密码</label>
+                        <input type="password" id="confirmNewPwd" placeholder="请再次输入新密码">
+                    </div>
+                    <button class="submit-btn" id="changePwdBtn">确认修改</button>
+                </div>
+
+                <!-- 收货地址编辑弹窗 -->
+                <div class="address-modal" id="addressModal">
+                    <div class="modal-content">
+                        <h4 class="modal-title">设置收货地址</h4>
+                        <div class="form-item">
+                            <label for="receiverName">收货人姓名</label>
+                            <input type="text" id="receiverName" placeholder="请输入收货人姓名">
+                        </div>
+                        <div class="form-item">
+                            <label for="receiverPhone">联系电话</label>
+                            <input type="tel" id="receiverPhone" placeholder="请输入11位手机号码">
+                        </div>
+                        <div class="form-item">
+                            <label for="receiverDetailAddress">详细地址</label>
+                            <input type="text" id="receiverDetailAddress" placeholder="请输入校园详细收货地址">
+                        </div>
+                        <div class="modal-btn-group">
+                            <button class="cancel-btn" id="cancelAddressBtn">取消</button>
+                            <button class="submit-btn" id="saveAddressBtn">保存</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 底部购物信息固定栏 -->
+    <div class="bottom-cart-bar" id="bottomCartBar">
+        <div class="cart-info-left">
+            <span class="cart-count" id="cartCount">0</span>
+            <span class="cart-text">件商品</span>
+        </div>
+        <div class="cart-info-right">
+            <span class="total-text">到手约：</span>
+            <span class="final-total-price" id="finalTotalPrice">¥0.00</span>
+        </div>
+    </div>
+
+    <!-- 确保JS文件路径正确（与index.html同目录） -->
+    <script src="script.js"></script>
+</body>
+</html>
